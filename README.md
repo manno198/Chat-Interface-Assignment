@@ -2,6 +2,10 @@
 
 A modern chat interface application built with Next.js, featuring a responsive design with a chat assistant that automatically opens when interacting with the input field.
 
+<img width="1912" height="977" alt="image" src="https://github.com/user-attachments/assets/4602d28b-948f-4947-874b-356d005bced7" />
+<img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/e373dffb-ceba-47d7-8b0d-2e047ca61443" />
+
+
 ## 🚀 Features
 
 - **Modern UI/UX**: Clean, minimalist design with smooth animations
