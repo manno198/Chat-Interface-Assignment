@@ -1,4 +1,4 @@
-// File: D:\Projects\morph-chat-transit-64-main\app\about\page.tsx
+// File: D:\open source\Chat-Interface-Assignment\app\about\page.tsx
 import * as entry from '../../../../app/about/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
