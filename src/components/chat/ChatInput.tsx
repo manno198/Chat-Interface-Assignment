@@ -18,12 +18,9 @@ export const ChatInput: React.FC = () => {
   };
 
   const handleInputClick = () => {
-    if (chatState.currentPage === 'home') {
-      // If chat is minimized, open it first
-      if (chatState.isMinimized) {
-        toggleMinimized();
-      }
-      // Then transition to search page
+    // Only transition to about page if we're on home page and chat is minimized
+    if (chatState.currentPage === 'home' && chatState.isMinimized) {
+      toggleMinimized();
       startPageTransition('about');
     }
   };

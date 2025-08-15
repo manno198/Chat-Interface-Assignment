@@ -4,11 +4,13 @@ import React, { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useChatContext } from '@/contexts/ChatContext';
 import { Home, Search, Settings, HelpCircle, Mail, LogOut } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export const Navigation: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { setCurrentPage } = useChatContext();
+  const { toast } = useToast();
 
   useEffect(() => {
     // Set current page based on pathname on load
@@ -19,11 +21,26 @@ export const Navigation: React.FC = () => {
     }
   }, [pathname, setCurrentPage]);
 
-  const handleNavigation = (path: string) => {
-    router.push(path);
+  const handleNavigation = (path: string, label: string) => {
+    // Check if the page exists (only home and about exist)
+    if (path === '/' || path === '/about') {
+      router.push(path);
+    } else {
+      // Show under construction message for non-existent pages
+      toast({
+        title: "🚧 Under Construction",
+        description: `${label} page is coming soon!`,
+        duration: 3000,
+      });
+    }
   };
 
   const isActive = (path: string) => {
+    // Only consider pages that actually exist as active
+    const existingPages = ['/', '/about'];
+    if (!existingPages.includes(path)) {
+      return false;
+    }
     return pathname === path || (pathname === '/' && path === '/');
   };
 
@@ -49,7 +66,7 @@ export const Navigation: React.FC = () => {
           return (
             <button
               key={item.path}
-              onClick={() => handleNavigation(item.path)}
+              onClick={() => handleNavigation(item.path, item.label)}
               className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 ${
                 active 
                   ? 'bg-orange-100 text-orange-600 shadow-sm' 
@@ -78,7 +95,7 @@ export const Navigation: React.FC = () => {
           return (
             <button
               key={item.path}
-              onClick={() => handleNavigation(item.path)}
+              onClick={() => handleNavigation(item.path, item.label)}
               className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 ${
                 active 
                   ? 'bg-orange-100 text-orange-600 shadow-sm' 
@@ -95,7 +112,7 @@ export const Navigation: React.FC = () => {
       {/* Logout at the very bottom */}
       <div className="flex flex-col items-center">
         <button
-          onClick={() => handleNavigation('/logout')}
+          onClick={() => handleNavigation('/logout', 'Logout')}
           className="w-10 h-10 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-800 transition-all duration-200"
           title="Logout"
         >
