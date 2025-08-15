@@ -86,7 +86,9 @@ export const useChat = () => {
   const setCurrentPage = useCallback((page: 'home' | 'about') => {
     setChatState(prev => ({
       ...prev,
-      currentPage: page
+      currentPage: page,
+      // Ensure chat window is open when on search page
+      isMinimized: page === 'about' ? false : prev.isMinimized
     }));
   }, []);
 
@@ -100,13 +102,30 @@ export const useChat = () => {
   const startPageTransition = useCallback((newPage: 'home' | 'about') => {
     setTransitioning(true);
     
-    // After transition completes, update page and stop transitioning
+    // Ensure chat window is open when transitioning to search page
+    if (newPage === 'about') {
+      setChatState(prev => ({
+        ...prev,
+        isMinimized: false
+      }));
+    }
+    
+    // Longer delay to allow for smooth morphing transition
     setTimeout(() => {
       setCurrentPage(newPage);
+      // Ensure chat window stays open after transition
+      if (newPage === 'about') {
+        setTimeout(() => {
+          setChatState(prev => ({
+            ...prev,
+            isMinimized: false
+          }));
+        }, 100);
+      }
       setTimeout(() => {
         setTransitioning(false);
-      }, 400);
-    }, 500);
+      }, 600);
+    }, 800);
   }, [setCurrentPage, setTransitioning]);
 
   const sendMessage = useCallback(() => {

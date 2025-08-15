@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Send, Paperclip, Smile } from 'lucide-react';
 import { useChatContext } from '@/contexts/ChatContext';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export const ChatInput: React.FC = () => {
-  const { chatState, updateInput, sendMessage, startPageTransition, toggleMinimized } = useChatContext();
+  const { chatState, updateInput, sendMessage } = useChatContext();
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -17,23 +18,24 @@ export const ChatInput: React.FC = () => {
     }
   };
 
-  const handleInputClick = () => {
-    // Only transition to about page if we're on home page and chat is minimized
-    if (chatState.currentPage === 'home' && chatState.isMinimized) {
-      toggleMinimized();
-      startPageTransition('about');
-    }
-  };
-
   return (
-    <div className="border-t border-blue-200/50 p-4 space-y-3 bg-blue-50/50">
+    <motion.div 
+      className="border-t border-blue-200/50 p-4 space-y-3 bg-blue-50/50"
+      transition={{
+        layout: {
+          type: "spring",
+          damping: 25,
+          stiffness: 400,
+          duration: 0.8
+        }
+      }}
+    >
       <Input
         value={chatState.currentInput}
         onChange={(e) => updateInput(e.target.value)}
         onKeyPress={handleKeyPress}
-        onClick={handleInputClick}
         placeholder="Please type your message"
-        className="w-full cursor-pointer border-gray-300 bg-white"
+        className="w-full border-gray-300 bg-white"
       />
       
       <div className="flex items-center justify-between gap-2">
@@ -91,6 +93,6 @@ export const ChatInput: React.FC = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

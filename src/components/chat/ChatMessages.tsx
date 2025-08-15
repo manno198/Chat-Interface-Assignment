@@ -17,7 +17,7 @@ export const ChatMessages: React.FC = () => {
   }, [chatState.messages]);
 
   return (
-    <ScrollArea className="flex-1 p-4">
+    <ScrollArea className="flex-1 p-4 h-full">
       <motion.div 
         className="space-y-4"
         animate={{ 
@@ -37,8 +37,8 @@ export const ChatMessages: React.FC = () => {
               y: chatState.isTransitioning ? -10 : 0 
             }}
             transition={{ 
-              delay: chatState.isTransitioning ? (chatState.messages.length - index - 1) * 0.05 : index * 0.1,
-              duration: 0.3,
+              delay: chatState.isTransitioning ? (chatState.messages.length - index - 1) * 0.05 : index * 0.15,
+              duration: 0.5,
               ease: "easeInOut"
             }}
             className={`flex gap-3 ${

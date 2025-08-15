@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useChatContext } from '@/contexts/ChatContext';
 import { Navigation } from '@/components/layout/Navigation';
 import { ChatMessages } from '@/components/chat/ChatMessages';
@@ -26,11 +27,21 @@ export default function HomePage() {
         </div>
         
         {/* Fixed Chat Input at Bottom */}
-        <div className="fixed bottom-0 right-0 z-20 bg-card/95 backdrop-blur-sm border-t border-border" style={{ left: '4rem' }}>
-          <div className="transition-opacity duration-300">
-            <ChatInput />
-          </div>
-        </div>
+        <motion.div 
+          layoutId="chat-input-container"
+          className="fixed bottom-0 right-0 z-20 bg-card/95 backdrop-blur-sm border-t border-border" 
+          style={{ left: '4rem' }}
+          transition={{
+            layout: {
+              type: "spring",
+              damping: 25,
+              stiffness: 400,
+              duration: 0.8
+            }
+          }}
+        >
+          <ChatInput />
+        </motion.div>
       </div>
     </div>
   );

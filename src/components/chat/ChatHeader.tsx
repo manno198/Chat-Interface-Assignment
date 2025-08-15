@@ -6,11 +6,11 @@ import { useChatContext } from '@/contexts/ChatContext';
 import { Button } from '@/components/ui/button';
 
 interface ChatHeaderProps {
-  onResize: (resized: boolean) => void;
-  isResized: boolean;
+  onResize?: (resized: boolean) => void;
+  isResized?: boolean;
 }
 
-export const ChatHeader: React.FC<ChatHeaderProps> = ({ onResize, isResized }) => {
+export const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const { toggleMinimized } = useChatContext();
 
   return (
